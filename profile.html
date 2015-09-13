@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+  
+  <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+  <!--<script>var Firebase = require("firebase");</script>-->
+    <meta charset="utf-8" />
+    <meta name="author" content="Script Tutorials" />
+    <title>Study With Me | My Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="images/people.png" type="image">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <!-- attach CSS styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/profile.css" rel="stylesheet" />
+    <link rel='stylesheet' href='https://cdn.firebase.com/libs/firechat/2.0.0/firechat.min.css' />
+    <script src='./firechat/dist/firechat.js'></script>
+
+       <!-- liveReload - So developers dont have to hit the refresh button. Delete in production version -->
+  <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
+  </head>
+
+  <body>
+    <!-- navigation panel -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="profile.html">Welcome, <span class="fname">User</span>!</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="index.html" onclick="disconnect()">Sign Out</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- first section - Home -->
+    <div id="home" class="home">
+
+
+    <br>
+    <br>
+    <br>
+       <div class="text-vcenter">
+        <div class="signin-card">
+          <div class="row">
+            <div class="col-m-3">
+              <i id="userImg" class="fa fa-user"></i>
+            </div>
+            <div class="col-sm-4">
+              <p class="name"><span id="ffname" class="fname"></span> <span class="lname"></span></p>
+              <p class="info">Florida State University</p>
+
+            </div>
+          </div>
+
+          <div id="userCourses" class="col-sm-4">
+          </div>
+          
+          <hr>
+          <div class="row">
+
+            <div id="userMatches" class="col-md-7">
+            </div>
+            
+            <div class="col-md-5">
+              <div id="firechat-wrapper">
+               
+                <!-- Include this file on any page you wish to see a chatter box.-->
+                <span id="nameholder" style="display:none;"></span>
+              </div>
+            </div>
+          </div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
+        <br>
+        <br>
+        <br> 
+      </div>
+    </div>
+
+
+    </div>
+    <!-- /first section -->
+
+    <!-- footer -->
+    <footer>
+      <div class="text-vcenter">
+      <div class="container">
+        <!-- <a href="userContactUs.html" class="blueLink">Contact Us</a> -->
+        <p class="text-center">Copyright &copy; Study With Me | 2015</p>
+      </div>
+      </div>
+    </footer>
+    <!-- /footer -->
+
+    <!-- attach JavaScripts -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/jquery.localScroll.min.js"></script>
+
+     <script>
+       var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+       var authData = ref.getAuth();
+        //$snapshot.val().firstname
+      function isUserLoggedIn(authData) {
+      //Previously called authDataCallback by Firebase Docs https://www.firebase.com/docs/web/guide/user-auth.html
+      if (authData) {
+        //console.log('AUTH-ED', "https://vivid-torch-1590.firebaseio.com/users/" + authData.uid, authData);
+        // console.log("User " + authData.uid + " is logged in with " + authData.provider);
+      var profileRef = new Firebase("https://vivid-torch-1590.firebaseio.com/users/" + authData.uid);
+      profileRef.once('value', function(snapshot) {
+        $(".fname").text(snapshot.val().firstname);
+        $(".lname").text(snapshot.val().lastname);
+      });
+           // console.log(dump(authData));
+      } else {
+        console.log("User is logged out");
+      }
+    }
+    
+    ref.onAuth(isUserLoggedIn);
+
+      // REGISTER DOM ELEMENTS
+    var messageField = $('#messageInput');
+    var messageList = $('#example-messages');
+
+    // LISTEN FOR KEYPRESS EVENT
+    messageField.keypress(function (e) {
+      if (e.keyCode == 13) {
+        //FIELD VALUES  
+        var username = $("#ffname").text();
+        var message = messageField.val();
+
+        var myChild = ref.child("message");
+        //SAVE DATA TO FIREBASE AND EMPTY FIELD
+        myChild.push({name:username, text:message});
+        messageField.val('');
+      }
+    });
+    var myChild = ref.child("message");
+    myChild.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text);
+
+      });
+
+
+      function displayChatMessage(name, text) {
+        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#chatter'));
+        $('#chatter')[0].scrollTop = $('#chatter')[0].scrollHeight;
+      };
+
+    /*$(document).ready(function(){
+        $('#chatterBox').animate({
+            scrollTop: $('#chatterBox')[0].scrollHeight}, 2000);
+    });*/
+
+    /* repeatString() returns a string which has been repeated a set number of times */ 
+  function repeatString(str, num) {
+      out = '';
+      for (var i = 0; i < num; i++) {
+          out += str; 
+      }
+      return out;
+  }
+
+    function disconnect(){
+      ref.unauth();
+    }       
+var globalarray = new Array(Array());
+    var existingval2 = new Array();
+
+    function grabstuff(){
+      var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+      var grabusers =ref.child("/users");
+      grabusers.once("value", 
+        function(snap){
+         // console.log(snap.val());
+          snap.forEach(function(childsnap){
+            var currentkey = childsnap.key();
+            if(currentkey !=authData.uid){
+            var grabcourses = grabusers.child("/"+currentkey+"/courses");
+            var grabfirst = grabusers.child("/"+currentkey+"/firstname");
+            var grablast = grabusers.child("/"+currentkey+"/lastname");
+            var existingval = new Array();
+            existingval.push(currentkey.toString());
+            grabfirst.once("value",
+              function(snap2){
+                //console.log(snap2.val());
+                var data = snap2.val();
+                existingval.push(data.toString());
+                  //console.log(existingval);
+                
+              });
+            grablast.once("value",
+              function(snap2){
+                //console.log(snap2.val());
+                var data = snap2.val();
+                existingval.push(data.toString());
+                  //console.log(existingval);
+                
+              });
+            grabcourses.once("value",
+              function(snap2){
+                //console.log(snap2.val());
+                snap2.forEach(function(doublesnaps){
+                  var data = doublesnaps.val();
+                  existingval.push(data.toString());
+                  //console.log(existingval);
+                });
+              });
+            globalarray.push(existingval);
+          }
+            
+            
+          });
+        });
+      //console.log(globalarray);
+    } 
+    function holyshit(){
+      
+      var ref2 = new Firebase("https://vivid-torch-1590.firebaseio.com/users/"+authData.uid+"/courses");
+      
+      ref2.once("value", 
+        function(snap){
+          //console.log(snap.val());
+          snap.forEach(function(childsnap){
+           var data = childsnap.val();
+           existingval2.push(data.toString());
+          
+          });
+          //console.log(existingval2);
+        });
+      
+    }
+    grabstuff();
+    holyshit();
+    
+    var matches = new Array(Array());
+    function findMatches(){
+      
+      for(var x = 0; x < existingval2.length; x++)
+      {
+        for(var y = 1; y < globalarray.length; y++)
+        {
+          for(var z = 3; z < globalarray[y].length; z++)
+          {
+            if(existingval2[x].toLowerCase() == globalarray[y][z].toLowerCase())
+            {
+              var temp = globalarray[y][1].toString() + ' '+globalarray[y][2].toString();
+              var index = matches.indexOf(temp);
+              if(index < 0){
+                matches.push('c');
+                matches.push(globalarray[y][0])
+                matches.push('x');
+                matches.push(temp);
+                matches.push(existingval2[x]);
+              }
+              else
+                matches.splice(index+1, 0, existingval2[x])
+                
+                
+              }
+            }
+          }
+        }
+      }
+
+      
+      
+    function populatelist(){
+      var id;
+      for(var x = 0; x < matches.length; ++x)
+      {
+        if (matches[x] == 'c'){
+          id = matches[x+1];
+          x+=1;
+          continue;
+        }
+        if( matches[x] == 'x'){
+         
+         var d = x+1;
+         for(; d < matches.length; ++d)
+         {
+          if(matches[d] != 'c')
+            continue;
+          else{
+            console.log(id);
+            break;
+          }
+         }
+         var newarray = matches.slice(x+2,d);
+         var stringify = newarray.toString();
+         document.getElementById("userMatches").insertAdjacentHTML('beforeend','<div class = "sillywilly"><h3>'+matches[x+1]+'</h3><h2>'+stringify+'</h2><button value='+id+' onclick="startchat(this.value)">Chat</button></div>');
+         x = d-1;
+        }
+      }
+      var newstring = existingval2.toString();
+      document.getElementById("userCourses").insertAdjacentHTML('beforeend','<div class = "sillywilly2"><p>Courses You\'re In: '+newstring+'</p></div>');
+    }
+    function startchat(value){
+      console.log(value);
+     var chatRef = new Firebase('https://vivid-torch-1590.firebaseio.com/chat');
+      chatRef.onAuth(function(authData) {
+        // Once authenticated, instantiate Firechat with our user id and user name
+        if (authData) {
+          console.log(authData)
+          var chat = new FirechatUI(chatRef, document.getElementById('firechat-wrapper'));
+          var fireChat = chat._chat;
+          var usersRef = new Firebase('https://vivid-torch-1590.firebaseio.com/users/' + authData.uid);
+          usersRef.once('value', function(snap) {
+            var user = snap.val();
+            fireChat.setUser(authData.uid, user.firstname + ' '+ user.lastname, function(user){
+              fireChat.resumeSession();
+              fireChat.createRoom("StudyChat","private", function(roomId) {
+                console.log(roomId,fireChat._userId,fireChat._sessionId);
+            console.log(fireChat);
+            fireChat.inviteUser(value, roomId);
+            fireChat.enterRoom(roomId);
+          });
+
+            });
+
+          });
+         
+          
+          
+        }
+      });
+    }
+    setTimeout(function(){
+      console.log(existingval2);
+      console.log(globalarray);
+      findMatches();
+      populatelist();
+      console.log(matches);
+    },2000);
+      </script>
+  </body>
+
+</html>
+

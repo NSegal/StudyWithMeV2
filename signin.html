@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Script Tutorials" />
+    <title>Study With Me | Sign In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="images/people.png" type="image">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- attach CSS styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet" />
+    <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+
+     <!-- liveReload - So developers dont have to hit the refresh button. Delete in production version -->
+  <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
+  </head>
+
+  <body>
+    <!-- navigation panel -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Study With Me</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">How It Works</a></li>
+            <li><a href="index.html#information">More Info</a></li>
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="..." alt="...">
+              </a>
+            </div>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- first section - Home -->
+    <div id="home" class="home">
+      
+    <br>
+    <br>
+    <br>
+
+
+      <div class="text-vcenter">
+        
+        <h2 class="darkGrey">Please Sign In</h2>
+        <div class="signin-card">
+          <form class="form-signin" method="post">
+            <i class="glyphicon glyphicon-user signin-icon"></i>
+
+            <div class="field--wrapper">
+              <label for="email">Email</label>
+              <input type="text" id="usn" placeholder="Email" class="form-control" name="email">
+            </div>
+
+            <div class="field--wrapper">
+              <label for="password">password</label>
+              <input type="password" id="pwd" placeholder="Password" class="form-control" name="password">
+            </div>
+            
+            <button type="button" onclick="validate()" class="btn btn-primary form-control">Sign In</button>
+            <br />
+            <br />
+            <small style="float:right;"><a style="text-align:right;" class="blueLink" href="need-help.html">Need help?</a></small>
+            <span style="clear:both;"></span>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- /first section -->
+
+    <!-- footer -->
+    <footer>
+      <div class="text-vcenter">
+      <div class="container">
+        <!-- <a href="contact.html" class="blueLink">Contact Us</a> -->
+        <p class="text-center">Copyright &copy; Study With Me | 2015</p>
+      </div>
+      </div>
+    </footer>
+    <!-- /footer -->
+
+    <!-- attach JavaScripts -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/jquery.localScroll.min.js"></script>
+
+    <script>
+    $(function float_label_form(){
+      var onClass = "on";
+      var showClass = "show";
+      
+      $("input").bind("checkval",function(){
+        var label = $(this).prev("label");
+        if(this.value !== ""){
+          label.addClass(showClass);
+        } else {
+          label.removeClass(showClass);
+        }
+      }).on("keyup",function(){
+        $(this).trigger("checkval");
+      }).on("focus",function(){
+        $(this).prev("label").addClass(onClass);
+      }).on("blur",function(){
+          $(this).prev("label").removeClass(onClass);
+      }).trigger("checkval");
+    });
+
+    function validate(){
+      var usn = document.getElementById("usn").value;
+      var pwd = document.getElementById("pwd").value;
+      var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+      ref.authWithPassword({
+        email    : usn,
+        password : pwd
+      }, function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+        window.location.href = "profile.html";
+      }
+      }); 
+    }
+    function isUserLoggedIn(authData) {
+      //Previously called authDataCallback by Firebase Docs https://www.firebase.com/docs/web/guide/user-auth.html
+      if (authData) {
+        console.log("User " + authData.uid + " is logged in with " + authData.provider);
+      } else {
+        console.log("User is logged out");
+      }
+    }
+    var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+    ref.onAuth(isUserLoggedIn);
+
+
+    $(document).ready(function(){
+    $('#pwd').keypress(function(e){
+      if(e.keyCode==13)
+      validate()
+    });
+  });
+
+  </script>  
+  </body>
+  
+</html>

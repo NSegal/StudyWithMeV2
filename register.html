@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+  <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+  <!--<script>var Firebase = require("firebase");</script>-->
+    <meta charset="utf-8" />
+    <meta name="author" content="Script Tutorials" />
+    <title>Study With Me | Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="images/people.png" type="image">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- attach CSS styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/register.css" rel="stylesheet" />
+
+       <!-- liveReload - So developers dont have to hit the refresh button. Delete in production version -->
+  <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
+  </head>
+
+  <body>
+    <!-- navigation panel -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Study With Me</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">How It Works</a></li>
+            <li><a href="index.html#information">More Info</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- first section - Home -->
+    <div id="home" class="home">
+
+
+      <br>
+    <br>
+    <br>
+       <div class="text-vcenter">
+        
+        <h2 class="darkGrey">Create a New Account</h2>
+        <div class="signin-card">
+          <form class="form-signin" method="post">
+            <div class="field--wrapper">
+              <label for="school">First Name</label>
+              <input type="text" id ="first" placeholder="First Name" class="form-control">
+            </div>          
+            <div class="field--wrapper">
+              <label for="last">Last Name</label>
+              <input type="text" id= "last" placeholder="Last Name" class="form-control">
+            </div>
+            <div class="field--wrapper">
+              <label for="school">Full Name of Your University</label>
+              <input type="text" id= "school" placeholder="Full Name of Your University" class="form-control">
+            </div>
+            <div class="field--wrapper">
+              <label for="email">Email</label>
+              <input type="text" id= "usn" placeholder="Email" class="form-control">
+            </div>
+            
+            <div class="field--wrapper">
+              <label for="password">Password</label>
+              <input type="password" id="pwd" placeholder="Password" class="form-control">
+            </div>
+            
+            <button type="button" onclick="validate()" class="btn btn-primary form-control">Sign Up For Free</button>
+            <br />
+            <br />
+            <small style="float:right;"><a style="text-align:right;" class="blueLink" href="signin.html">Already have an account?</a></small>
+            <span style="clear:both;"></span>
+          </form>
+          
+          </div>
+        </div>
+      </div>
+
+
+      </div>
+      <!-- /first section -->
+
+      <!-- footer -->
+      <footer>
+        <div class="text-vcenter">
+        <div class="container">
+          <!-- <a href="contact.html" class="blueLink">Contact Us</a> -->
+          <p class="text-center">Copyright &copy; Study With Me | 2015</p>
+        </div>
+        </div>
+      </footer>
+      <!-- /footer -->
+
+      <!-- attach JavaScripts -->
+      <script src="js/jquery-1.10.2.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+      <script type="text/javascript" src="js/jquery.localScroll.min.js"></script>
+  </body>
+
+<script>
+  
+
+ var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+  var isNewUser = true;
+  function getName(authData) {
+    switch(authData.provider) {
+      case 'password':
+          console.log(authData.password.email)
+         return authData.password.email.replace(/@.*/, '');
+      case 'twitter':
+         return authData.twitter.displayName;
+      case 'facebook':
+         return authData.facebook.displayName;
+    }
+  }
+
+  function authHandler(error, authData) {
+  if (error) {
+    console.log("Login Failed!", error);
+  } else {
+    console.log("Authenticated successfully with payload:", authData);
+  }
+}
+function redirect(){
+  window.location = "settings.html";
+}
+  function validate(){
+    var usn = document.getElementById("usn").value;
+    var pwd = document.getElementById("pwd").value;
+    //var ref = new Firebase("https://vivid-torch-1590.firebaseio.com")
+    
+
+
+    ref.createUser({
+      email    : usn,
+      password : pwd
+    }, function(error, userData) {
+    if (error) {
+      console.log("Error creating user:", error);
+    } else {
+      console.log("Successfully created user account with uid:", userData.uid);
+       ref.authWithPassword({
+      email    : usn,
+      password : pwd
+      }, function(error,authData){
+        if (error) {
+          console.log("Login Failed!", error);
+        } else {
+          console.log("Authenticated successfully with payload:", authData);
+          // save the user's profile into the database so we can list users,
+           // use them in Security and Firebase Rules, and show profiles
+          ref.child("users").child(authData.uid).set({
+            provider: authData.provider,
+            name: getName(authData),
+            firstname:document.getElementById("first").value,
+            lastname:document.getElementById("last").value,
+            school: document.getElementById("school").value.toString().toLowerCase(),
+            courses:{}
+          },function(error){
+            if(error)
+              console.log("Adding user failed",error);
+            else
+              redirect();
+          });
+        }
+
+      });
+      
+    }
+  });
+
+  }
+
+  $(function float_label_form(){
+      var onClass = "on";
+      var showClass = "show";
+      
+      $("input").bind("checkval",function(){
+        var label = $(this).prev("label");
+        if(this.value !== ""){
+          label.addClass(showClass);
+        } else {
+          label.removeClass(showClass);
+        }
+      }).on("keyup",function(){
+        $(this).trigger("checkval");
+      }).on("focus",function(){
+        $(this).prev("label").addClass(onClass);
+      }).on("blur",function(){
+          $(this).prev("label").removeClass(onClass);
+      }).trigger("checkval");
+    });
+
+  $(document).ready(function(){
+    $('#pwd').keypress(function(e){
+      if(e.keyCode==13)
+      validate()
+    });
+  });
+
+</script>
+</html>
+

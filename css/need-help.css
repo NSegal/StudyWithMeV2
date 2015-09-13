@@ -1,0 +1,174 @@
+/* ============================================================================================== 
+This copyright notice must be kept untouched in the stylesheet at all times.
+The original version of this stylesheet and the associated (x)html 
+is available at http://www.script-tutorials.com/bootstrap-one-page-template-with-parallax-effect/
+Copyright (c) Script Tutorials. All rights reserved.
+This stylesheet and the associated (x)html may be modified in any way to fit your requirements.
+================================================================================================= */
+
+/* general styles */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* padded section */
+.pad-section {
+  padding: 50px 0;
+}
+.pad-section img {
+  width: 100%;
+}
+
+/* vertical-centered text */
+.text-vcenter {
+  text-align: center;
+  vertical-align: middle;
+}
+.text-vcenter h1 {
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+/* additional sections */
+#home {
+  background: url(../images/bricks.jpg); repeat, fixed;
+  display: table;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#login {
+  height: 100%;
+  width: 100%;
+}
+
+#about {
+}
+
+#services {
+  background-color: #D6E8E8;
+  color: #ffffff;
+}
+#services .glyphicon {
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 60px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+#social {
+  background-color: #D6E8E8;
+  color: #ffffff;
+  text-align: center;
+}
+
+#social .fa {
+  display: inline-block;
+  font-size: 30px;
+  height: 10px;
+  line-height: 10px;
+  position: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+.signin-card{
+    min-height: 100px;
+    max-width:350px;
+    padding:40px 40px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    margin:0 auto;
+    background-color:#f7f7f7;
+}
+
+.text-vcenter {
+  /*display: table-cell; //Commented out by nick*/
+  text-align: center;
+  vertical-align: middle;
+}
+.text-vcenter h1 {
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+
+.signin-icon {
+    padding: 17px 51px 20px 21px;
+    box-shadow: 1px 1px 1px #49D;
+    font-size:230%;
+    margin-bottom:20px;
+    border-radius:100px;
+}
+.signin-card input{
+  font-size:110%;
+}
+
+a {
+  color:#DE5C5C;
+}
+
+a:hover {
+  color:#A02A2A;
+  text-decoration: underline;
+}
+
+.darkGrey{
+  color:#FFF;
+}
+
+.blueLink {
+  color:#DE5C5C;
+}
+.blueLink:hover{
+  color:#A02A2A;
+  text-decoration: underline;
+}
+
+.form-control{
+  width:95%;
+  margin:0 auto;
+}
+
+#information {
+  background: url(../images/desk2.gif) no-repeat center center fixed; 
+  display: table;
+  height: 800px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#information .panel {
+  opacity: 0.85;
+}
+
+footer {
+  padding: 20px 0;
+}
+footer .glyphicon {
+  color: #333333;
+  font-size: 60px;
+}
+footer .glyphicon:hover {
+  color: #306d9f;
+}

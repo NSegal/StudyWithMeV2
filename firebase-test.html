@@ -1,0 +1,113 @@
+<!doctype html>
+
+<html>
+  <head>
+	
+  <!-- Firebase-->
+	<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+	
+	<!-- jQuery -->
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+
+	<!-- liveReload - So developers dont have to hit the refresh button -->
+	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
+
+	<link rel="stylesheet" href="css/todc-bootstrap.min.css">
+
+
+  </head>
+  <body>
+  <h1> Firebase Test </h1>
+
+  <div style="float:left;" id='messagesDiv'></div>
+  <br>
+  
+
+   <aside style="width:33%; float:right;">
+	<h3>Notify Me!</h3>
+	<button id="requestPermission">Request Permission</button>
+	<button id="checkPermission">Check Permission</button>
+	<div>
+	Permission: <span id="result">-</span>
+	</div>
+  
+  </aside>
+  <div style="clear:both;"></div>
+  <input class="form-control" type='text' id='nameInput' placeholder='Name'>
+  <br><br>
+  <input class="form-control" type='text' id='messageInput' placeholder='Message'>
+  <br>
+  <input type="hidden" content="New Message - Study With Me" id="hiddenNotificationTitle">
+  <input type="hidden" content="Study" id="hiddenNotificationTag">
+  <input type="hidden" content="http://static.tvtropes.org/pmwiki/pub/images/FIRE.png" id="hiddenIconTag">
+  
+ 
+  <script>
+
+
+
+
+  	var myDataRef = new Firebase('https://vivid-torch-1590.firebaseIO.com/');
+  	$('#messageInput').keypress(function (e) {
+  		if (e.keyCode == 13 ) { //enter key
+
+  			var name = $('#nameInput').val();
+          	var text = $('#messageInput').val();
+
+          	//myDataRef.set('User ' + name + ' says ' + text);
+          	myDataRef.push({name: name, text: text});
+
+  			$('#messageInput').val('');
+
+  			
+  		}
+  	});
+
+  	//We need to tell the database to notify us when chat messages arrive
+  	//On() @params eventType, callbackFunction
+  	myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text);
+        var notification;
+		      notification = new Notification(message.name, {
+		        tag: $("#hiddenNotificationTag").val(),
+		        body: message.text,
+		        iconUrl: $("#hiddenNotificationIcon").val(),
+		        icon: $("#hiddenNotificationIcon").val()
+		      });
+		      return notification.onclick = function() {
+		        notification.close();
+		        window.open().close();
+		        return window.focus();
+		      };
+      });
+      function displayChatMessage(name, text) {
+        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+      };
+
+
+      // Allow Browser Notifications
+      $(function() {
+		  if (window.Notification) {
+		    $("#requestPermission").on("click", function() {
+		      return Notification.requestPermission();
+		    });
+		    $("#checkPermission").on("click", function() {
+		      if (Notification.permission) {
+		        return $("#result").text(Notification.permission);
+		      } else {
+		        return $("#result").text((new Notification("check")).permission);
+		      }
+		    });
+		    return $("#show").on("click", function() {
+		      
+		    });
+		  }
+		});
+
+
+  </script>
+  </body>
+</html>

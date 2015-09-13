@@ -1,0 +1,145 @@
+﻿/* ============================================================================================== 
+This copyright notice must be kept untouched in the stylesheet at all times.
+The original version of this stylesheet and the associated (x)html 
+is available at http://www.script-tutorials.com/bootstrap-one-page-template-with-parallax-effect/
+Copyright (c) Script Tutorials. All rights reserved.
+This stylesheet and the associated (x)html may be modified in any way to fit your requirements.
+================================================================================================= */
+
+/* general styles */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* padded section */
+.pad-section {
+  padding: 50px 0;
+  padding-top: 55px;
+}
+.pad-section img {
+  width: 100%;
+}
+
+/* vertical-centered text */
+.text-vcenter {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.text-vcenter h1 {
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* additional sections */
+#littleicon {
+  font-size:200px;
+  margin-left:200px;
+}
+#home {
+  background: url(../images/desk.gif) no-repeat center center fixed; 
+  display: table;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* Title and Slogan on homepage */
+body.home .site-title, 
+body.home .site-description {
+  color: #FFF; /* White */
+  text-shadow: 2px 2px 2px #222;
+}
+
+.fa {
+  font-size: 50px;
+  border: 3px solid #FFF;
+  border-radius: 100px;
+  width: 100px;
+  height: 100px;
+  padding: 22px 16px;
+}
+
+#chatterBox{
+  max-height:500px;
+  overflow-y:scroll;
+}
+
+.blueLink {
+  color:#DE5C5C;
+}
+.blueLink:hover{
+  color:#A02A2A;
+  text-decoration: underline;
+}
+
+#about {
+}
+
+#services {
+  background-color: #A02A2A;
+  color: #ffffff;
+}
+#services .glyphicon {
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  display: inline-block;
+  font-size: 60px;
+  height: 140px;
+  line-height: 140px;
+  text-align: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+#social {
+  background-color: #D6E8E8;
+  color: #ffffff;
+  text-align: center;
+}
+
+#social .fa {
+  display: inline-block;
+  font-size: 30px;
+  height: 10px;
+  line-height: 10px;
+  position: center;
+  vertical-align: middle;
+  width: 140px;
+}
+
+
+#information {
+  background: url(../images/desk2.gif) no-repeat center center fixed; 
+  display: table;
+  height: 500px;
+  position: relative;
+  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#information .panel {
+  opacity: 0.85;
+}
+
+footer {
+  padding: 20px 0;
+}
+footer .glyphicon {
+  color: #333333;
+  font-size: 60px;
+}
+footer .glyphicon:hover {
+  color: #306d9f;
+}

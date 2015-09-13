@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Script Tutorials" />
+    <title>Study With Me</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="images/people.png" type="image">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- attach CSS styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" />
+
+  </head>
+
+  <body class="home">
+    <!-- navigation panel -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Study With Me</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">How It Works</a></li>
+            <li><a href="#information">More Info</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- first section - Home -->
+    <div id="home" class="home">
+      <div class="text-vcenter">
+        <h1 class="site-title">Study With Me</h1>
+        <h3 class="site-description">The best way to find a study buddy on campus</h3>
+        <a href="signin.html" class="btn btn-default btn-lg">Sign In</a>
+        <a href="register.html" class="btn btn-default btn-lg">Register</a>
+      </div>
+    </div>
+    <!-- /first section -->
+
+    <!-- second section - About -->
+    <div id="about" class="pad-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+          </div>
+          <div class="text-center">
+            <div style="max-width:650px; margin:0 auto" >
+            <h2>Match, Connect and Study.</h2>
+            <p class="lead">Our system helps match you with classmates on your campus that are taking the same classes as you so that you can connect and make the most out of your study sessions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /second section -->
+
+    <!-- third section - Services -->
+    <div id="services" class="pad-section">
+      <div class="container">
+        <h2 class="text-center">How It Works</h2> <hr />
+        <div class="row text-center">
+          <div class="col-sm-3 col-xs-6">
+            <i class="fa fa-list"></i>
+            <h4>List</h4>
+            <p>List the courses you are currently taking in your profile.</p>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <i class="fa fa-compress"></i>
+            <h4>Match</h4>
+            <p>Match with students on your campus who are taking the same courses as you.</p>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <i class="fa fa-question"></i>
+            <h4>Request</h4>
+            <p>Request a study session with one of your matches.</p>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <i class="fa fa-graduation-cap"></i>
+            <h4>Study</h4>
+            <p>Study sessions can be set up right from your profile!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /third section -->
+
+    <!-- fourth section - Information -->
+    <div id="information" class="pad-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">Chat With Study Matches</h2>
+              </div>
+              <div class="panel-body lead">
+                After you send or recieve a request to set up a study session with a student who is taking the same course as you, both you and the other student can either accept or reject the inviation. When an invitation is accepted, you gain access to reach that user through your personal profile via a built-in messenger. This makes it easy to set up a study session with your new study buddy. If the invitation is rejected however, access to chat with that person will not be given.
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">New Courses, New Study Matches</h2>
+              </div>
+              <div class="panel-body lead">
+                Every semester when you register for your new courses, you can enter the settings panel on your personal profile to update the courses you are currently enrolled in. As soon as you update these courses, new matches who are enrolled in the same courses as you will begin to appear on your profile for you to interact and study with. This quick process helps you save time when searching for the perfect study buddy or study group so that you can get the most out of your study sessions every time.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /fourth section -->
+
+
+    <!-- footer -->
+    <footer>
+      <div class="text-vcenter">
+      <div class="container">
+        <!-- <a href="contact.html" class="blueLink">Contact Us</a> -->
+        <p class="text-center">Copyright &copy; Study With Me | 2015</p>
+      </div>
+      </div>
+    </footer>
+    <!-- /footer -->
+
+    <!-- attach JavaScripts -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/jquery.localScroll.min.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script> 
+    $(function(){
+      $("#chatter").load("includes/chatterbox.html"); 
+    });
+    </script> 
+  </body>
+</html>

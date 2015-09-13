@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+  <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+  <!--<script>var Firebase = require("firebase");</script>-->
+    <meta charset="utf-8" />
+    <meta name="author" content="Script Tutorials" />
+    <title>Study With Me | Profile Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="images/people.png" type="image">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- attach CSS styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/settings.css" rel="stylesheet" />
+
+       <!-- liveReload - So developers dont have to hit the refresh button. Delete in production version -->
+  <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>-->
+  </head>
+
+  <body>
+    <!-- navigation panel -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="profile.html">Welcome, <span class="fname"></span>!</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="index.html" onclick="disconnect()">Sign Out</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- first section - Home -->
+    <div id="home" class="home">
+
+
+      <br>
+    <br>
+    <br>
+       <div class="text-vcenter">
+        
+        <h2 class="darkGrey">Edit Your Profile</h2>
+        <div class="signin-card">
+          <form class="form-signin" action="demo_sign_me_in.php" method="post">
+            
+            <script src="js/addInput.js" language="Javascript" type="text/javascript"></script>
+            <form method="POST">
+            <div id="dynamicInput">
+            Your Courses This Semester
+            <br><input type="text" name="myInputs" placeholder="Course 1" class="form-control" required>
+            </div>
+            <a href="#!" class="addCourse" onClick="addInput('dynamicInput');"><i class="fa fa-plus" style="font-size: 11px"></i> Add Another Course</a>
+            </form>
+            <br>
+            <button type="button" onclick="validate()" class="btn btn-primary form-control">Save Changes</button>
+            <br />
+            <span style="clear:both;"></span>
+          </form>
+        </div>
+        <br>
+        <br>
+        <br> 
+      </div>
+    </div>
+
+
+    </div>
+    <!-- /first section -->
+
+    <!-- footer -->
+    <footer>
+      <div class="text-vcenter">
+      <div class="container">
+        <!-- <a href="userContactUs.html" class="blueLink">Contact Us</a> -->
+        <p class="text-center">Copyright &copy; Study With Me | 2015</p>
+      </div>
+      </div>
+    </footer>
+    <!-- /footer -->
+
+    <!-- attach JavaScripts -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="js/jquery.localScroll.min.js"></script>
+  </body>
+
+<script>
+  
+  var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+  var authData = ref.getAuth();
+  var ref2 = new Firebase("https://vivid-torch-1590.firebaseio.com/users/"+authData.uid+"/courses");
+  console.log(authData.uid);
+
+  function disconnect(){
+    ref.unauth();
+  }
+  function validate(){
+    var chilluns;
+    var addstuffs = ref.child("/users/"+authData.uid+"/courses");
+    var coursenums = document.getElementsByName("myInputs");
+    //console.log(coursenums[0].value);
+   setTimeout(function(){
+      window.location = "profile.html";
+    },2000);
+    var existingval = new Array();
+    ref2.once("value", 
+      function(snap){
+        console.log(snap.val());
+        snap.forEach(function(childsnap){
+          var data = childsnap.val();
+          existingval.push(data.toString());
+          console.log(existingval);
+        });
+      });
+      /*
+        var flag = 0;
+        for(var x = 0; x < coursenums.length; ++x){
+          for(var i = 0; i < existingval.length; ++i){
+            if(coursenums[x].value.toString() === existingval[i].toString())
+              {
+                flag = 1;
+                break;
+              }
+            }
+          if (flag == 0)
+          {
+            addstuffs.push(coursenums[x].value);
+            console.log("Pushed");
+          }
+          else
+            flag = 0;
+        }*/
+      
+    
+    for (var i = 0; i < coursenums.length; i++)
+    {
+      
+      addstuffs.push(coursenums[i].value.toString());
+    }
+   
+    
+  }
+ var ref = new Firebase("https://vivid-torch-1590.firebaseio.com");
+
+      //$snapshot.val().firstname
+    function isUserLoggedIn(authData) {
+    //Previously called authDataCallback by Firebase Docs https://www.firebase.com/docs/web/guide/user-auth.html
+    if (authData) {
+      //console.log('AUTH-ED', "https://vivid-torch-1590.firebaseio.com/users/" + authData.uid, authData);
+      // console.log("User " + authData.uid + " is logged in with " + authData.provider);
+    var profileRef = new Firebase("https://vivid-torch-1590.firebaseio.com/users/" + authData.uid);
+    profileRef.once('value', function(snapshot) {
+      $(".fname").text(snapshot.val().firstname);
+      $(".lname").text(snapshot.val().lastname);
+    });
+         // console.log(dump(authData));
+    } else {
+      console.log("User is logged out");
+    }
+  }
+  
+  ref.onAuth(isUserLoggedIn);
+</script>
+</html>
+
